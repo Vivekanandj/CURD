@@ -1,13 +1,42 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" ng-app="crudApp">
 <head>
-  <meta charset="utf-8">
-  <title>MysqlCrud</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <meta charset="UTF-8">
+  <title>AngularJS MySQL CRUD App</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script src="app.js"></script>
 </head>
-<body>
-  <app-root></app-root>
+<body ng-controller="mainController as mainCtrl">
+  <div id="app-container">
+    <!-- Placeholder for AngularJS app -->
+    <div ng-view></div>
+
+    <h2>AngularJS MySQL CRUD App</h2>
+
+    <div id="actions-container">
+      <button ng-click="mainCtrl.loadItems()">Load Items</button>
+    </div>
+
+    <div ng-repeat="item in mainCtrl.items" class="item-container">
+      <h3>{{ item.name }}</h3>
+      <p>{{ item.description }}</p>
+      <button ng-click="mainCtrl.editItem(item)">Edit</button>
+      <button ng-click="mainCtrl.deleteItem(item.id)">Delete</button>
+    </div>
+
+    <div id="form-container">
+      <h3>{{ mainCtrl.editing ? 'Edit Item' : 'Add Item' }}</h3>
+      <form ng-submit="mainCtrl.saveItem()">
+        <label for="itemName">Name:</label>
+        <input type="text" ng-model="mainCtrl.item.name" id="itemName" required>
+
+        <label for="itemDescription">Description:</label>
+        <input type="text" ng-model="mainCtrl.item.description" id="itemDescription" required>
+
+        <button type="submit">{{ mainCtrl.editing ? 'Update' : 'Add' }} Item</button>
+      </form>
+    </div>
+  </div>
 </body>
 </html>
